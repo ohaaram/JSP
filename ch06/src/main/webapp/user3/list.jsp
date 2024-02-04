@@ -9,7 +9,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	String host="jdbc:mysql://127.0.0.1/studydb";
-	String user="oor92";
+	String user="root";
 	String pass="1234";
 	
 	List <user3DTO> users = new ArrayList<>();

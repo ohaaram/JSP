@@ -1,13 +1,14 @@
 <%@page import="java.sql.PreparedStatement"%>
-<%@page import="java.sql.Connection"%>
 <%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.Connection"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	request.setCharacterEncoding("UTF-8");
 
-	String uid=request.getParameter("uid");
+	String uid =request.getParameter("uid");
 	String name=request.getParameter("name");
-	String birth=request.getParameter("birth");
+	String gender = request.getParameter("gender");
+	String age = request.getParameter("age");
 	String hp=request.getParameter("hp");
 	String addr=request.getParameter("addr");
 	
@@ -17,21 +18,23 @@
 	
 	try{
 		Class.forName("com.mysql.cj.jdbc.Driver");
-		Connection conn  =DriverManager.getConnection(host,user,pass);
+		Connection conn=DriverManager.getConnection(host,user,pass);
 		
-		String sql="update `user3` set `name`=?,`birth`=?,`hp`=?,`addr`=? where `uid`=?";
-		PreparedStatement pstmt= conn.prepareStatement(sql);
+		String sql="insert into `user4` values(?,?,?,?,?,?)";
 		
-		pstmt.setString(1,name);
-		pstmt.setString(2,birth);
-		pstmt.setString(3,hp);
-		pstmt.setString(4,addr);
-		pstmt.setString(5,uid);
+		PreparedStatement psmt= conn.prepareStatement(sql);
 		
-		pstmt.executeUpdate();
+		psmt.setString(1, uid);
+		psmt.setString(2, name);
+		psmt.setString(3, gender);
+		psmt.setString(4, age);
+		psmt.setString(5, hp);
+		psmt.setString(6, addr);
+		
+		psmt.executeUpdate();
 		
 		conn.close();
-		pstmt.close();		
+		psmt.close();
 		
 	}catch(Exception e){
 		e.printStackTrace();

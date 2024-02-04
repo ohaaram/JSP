@@ -12,7 +12,7 @@
 	//수정 데이터 조회
 	
 	String host="jdbc:mysql://127.0.0.1/studydb";
-	String user="oor92";
+	String user="root";
 	String pass="1234";
 	
 	user1DTO dto = new user1DTO();

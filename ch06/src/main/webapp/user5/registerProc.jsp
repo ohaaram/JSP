@@ -1,16 +1,15 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="java.sql.PreparedStatement"%>
-<%@page import="java.sql.Connection"%>
+<%@page import="java.sql.Statement"%>
 <%@page import="java.sql.DriverManager"%>
-
+<%@page import="java.sql.Connection"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	request.setCharacterEncoding("UTF-8");
 
-	String uid=request.getParameter("uid");
 	String name=request.getParameter("name");
-	String birth=request.getParameter("birth");
-	String hp=request.getParameter("hp");
+	String gender=request.getParameter("gender");
 	String age=request.getParameter("age");
+	String addr=request.getParameter("addr");
 	
 	String host="jdbc:mysql://127.0.0.1/studydb";
 	String user="root";
@@ -18,27 +17,25 @@
 	
 	try{
 		Class.forName("com.mysql.cj.jdbc.Driver");
-		Connection conn = DriverManager.getConnection(host,user,pass);
+		Connection conn= DriverManager.getConnection(host,user,pass);
 		
-		String sql="UPDATE `user1` SET NAME=?,birth=?,hp=?,age=? WHERE `uid`=?;";		
+		String sql="insert into `user5`(`name`,`gender`,`age`,`addr`)values(?,?,?,?)";
 		
-		PreparedStatement psmt = conn.prepareStatement(sql);
+		PreparedStatement psmt=conn.prepareStatement(sql);
 		
 		psmt.setString(1,name);
-		psmt.setString(2,birth);
-		psmt.setString(3,hp);
-		psmt.setString(4,age);
-		psmt.setString(5,uid);
+		psmt.setString(2,gender);
+		psmt.setString(3,age);
+		psmt.setString(4,addr);
 		
 		psmt.executeUpdate();
 		
 		psmt.close();
 		conn.close();
 		
+		
 	}catch(Exception e){
 		e.printStackTrace();
 	}
-		
 	response.sendRedirect("./list.jsp");
-
 %>

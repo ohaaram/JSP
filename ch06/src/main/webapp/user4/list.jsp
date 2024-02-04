@@ -10,7 +10,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	String host="jdbc:mysql://127.0.0.1/studydb";
-	String user="oor92";
+	String user="root";
 	String pass="1234";
 	
 	List <user4DTO> users = new ArrayList<>();
@@ -19,7 +19,7 @@
 	try{
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		Connection conn = DriverManager.getConnection(host,user,pass);
-		String sql="select * from `user3`";
+		String sql="select * from `user4`";
 		Statement tsmt =  conn.createStatement();
 		ResultSet rs= tsmt.executeQuery(sql);
 		

@@ -5,13 +5,14 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 	String uid=request.getParameter("uid");
+	System.out.println("uid : "+uid);
 	String name=request.getParameter("name");
 	String birth=request.getParameter("birth");
 	String hp=request.getParameter("hp");
 	String addr=request.getParameter("addr");
 	
 	String host="jdbc:mysql://127.0.0.1/studydb";
-	String user="oor92";
+	String user="root";
 	String pass="1234";
 	
 	

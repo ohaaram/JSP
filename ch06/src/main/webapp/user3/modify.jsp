@@ -9,7 +9,7 @@
 	String uid=request.getParameter("uid");
 	
 	String host="jdbc:mysql://127.0.0.1/studydb";
-	String user="oor92";
+	String user="root";
 	String pass="1234";
 	
 	user3DTO dto = new user3DTO();
@@ -64,7 +64,7 @@
 				
 				<tr>
 					<td>이름</td>
-					<td><input type="text" name="name" readonly value="<%=dto.getName() %>"></td>
+					<td><input type="text" name="name" value="<%=dto.getName() %>"></td>
 				</tr>
 				
 				<tr>
