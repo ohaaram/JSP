@@ -23,6 +23,7 @@
 		ResultSet rs= stmt.executeQuery(sql);
 		
 		while(rs.next()){
+			
 			dto=new user5DTO();			
 			
 			dto.setSeq(rs.getString(1));	
