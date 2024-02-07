@@ -1,9 +1,6 @@
 <%@page import="kr.co.jboard1.dao.ArticleDAO"%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="./_header.jsp" %>
-<%
-	ArticleDAO arts=ArticleDAO.getInstance();
-%>
         <main>
             <section class="write">
                 <h3>글쓰기</h3>
@@ -29,7 +26,6 @@
                         <div>
                             <a href="#" class="btnCancel">취소</a>
                             <input type="submit"  class="btnWrite" value="작성완료">
-                            <!--뭘하면 버튼이 생성될까?--><input type="submit" class="btnModify" value="수정완료">
                         </div>
                     </form>
                 </article>
