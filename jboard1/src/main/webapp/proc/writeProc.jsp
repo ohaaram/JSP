@@ -19,6 +19,6 @@
 	
 	ArticleDAO.getInstance().insertArticle(art);
 	
-	response.sendRedirect("/jboard1/user/list.jsp");
+	response.sendRedirect("/jboard1/list.jsp");
 
 %>

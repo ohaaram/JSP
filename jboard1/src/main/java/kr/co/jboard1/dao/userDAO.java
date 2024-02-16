@@ -21,6 +21,50 @@ public class userDAO extends DBHelper {
 	
 	
 	// 기본 CRUD 메서드
+	
+	public int selectCountUser(String type, String value) {
+		
+		StringBuilder sql = new StringBuilder(SQL.SELECT_COUNT_USER);
+		
+		if(type.equals("uid")) {
+			
+			sql.append(SQL.WHERE_UID);
+			
+		}else if(type.equals("nick")) {
+			
+			sql.append(SQL.WHERE_NICK);
+			
+		}else if(type.equals("email")) {
+			
+			sql.append(SQL.WHERE_EMAIL);
+			
+		}else if(type.equals("hp")) {
+			
+			sql.append(SQL.WHERE_HP);
+			
+		}
+		
+		int result=0;
+		
+		try {
+			conn=getConnection();
+			psmt = conn.prepareStatement(sql.toString());
+			psmt.setString(1, value);
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+			closeAll();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	
 	public void insertUser(userDTO user) {
 		try {
 			conn = getConnection();
@@ -32,6 +76,7 @@ public class userDAO extends DBHelper {
 			psmt.setString(5, user.getEmail());
 			psmt.setString(6, user.getHp());
 			psmt.setString(7, user.getRegip());
+			psmt.setString(8, user.getSms());
 			
 			psmt.executeUpdate();
 			closeAll();
@@ -112,6 +157,7 @@ public class userDAO extends DBHelper {
 				terms = new termsDTO();
 				terms.setTerms(rs.getString(1));
 				terms.setPrivacy(rs.getString(2));
+				terms.setSms(rs.getString(3));
 			}
 			
 			closeAll();

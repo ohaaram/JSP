@@ -3,7 +3,7 @@ package kr.co.jboard1.dto;
 public class termsDTO {
 	private String terms;
 	private String privacy;
-	
+	private String sms;
 	
 	public String getTerms() {
 		return terms;
@@ -17,6 +17,10 @@ public class termsDTO {
 	public void setPrivacy(String privacy) {
 		this.privacy = privacy;
 	}
-	
-
+	public String getSms() {
+		return sms;
+	}
+	public void setSms(String sms) {
+		this.sms = sms;
+	}
 }

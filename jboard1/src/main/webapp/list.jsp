@@ -5,12 +5,17 @@
 <%@ include file="./_header.jsp" %>
 <%
 	request.setCharacterEncoding("UTF-8");
-	String pg=request.getParameter("pg");
+
+	String pg=request.getParameter("pg");//그냥 돌려막기?
+	String searchType = request.getParameter("searchType");
+	String keyword = request.getParameter("keyword");
 	
-	ArticleDAO arts=ArticleDAO.getInstance();
+	ArticleDAO arts=ArticleDAO.getInstance();	
 
 	//전체 글 갯수(512)
-	int total = arts.selectCountTotal();
+	int total = arts.selectCountTotal(searchType,keyword);
+	
+	System.out.println("total값 : "+total);
 	
 	//마지막 페이지 번호 계산
 	int lastPageNum=0;
@@ -42,16 +47,51 @@
 	}
 	
 	//페이지 시작번호 계산
-	int pageStartNum=total-start;
+	int pageStartNum=total-start;//현재 페이지의 시작번호를 계산하는 곳
+
 	
-	//글 조회
-	List<ArticleDTO> arti= arts.selectArticles(start);
+	List<ArticleDTO> arti=null;
+	//동적 파라미터 생성
+	String params="";
+	
+	
+	if(searchType==null && keyword==null){	
+		//글 조회
+		arti = arts.selectArticles(start);
+	}else{	
+		//검색 조회
+		arti = arts.selectAriclesForSearch(searchType, keyword,start);	
+		 params = "&searchType="+searchType+"&keyword="+keyword;
+	}	
 %>
+<script>
+	window.onload=function(){
+		//const btnSearch=document.search.submit;
+		//btnSearch.onclick=()=>{
+		//	alert('검색클릭!');
+		//}
+		
+	}
+</script>
 
 <main>
     <section class="list">
-        <h3>글목록</h3>
-        <article>
+        <h3><a href ="/jaboard1/list.jsp"></a>글목록</h3>         
+        	<!-- 검색 -->
+        	<form action="/jboard1/list.jsp" class="search" name="search">
+        		<select name="searchType">
+        			<option value="title">제목</option>
+        			<option value="content">내용</option>
+        			<option value="title_content">제목+내용</option>
+        			<option value="writer">작성자</option>
+        		</select>
+        		
+        		<input type="text" name="keyword" placeholder="검색 키워드 입력">
+				<input type="submit" value="검색">
+				<input type="text" name="pg" value=<%=currentPg%>> 
+				
+			</form>
+      	<article>			
             <table border="0">
                 <tr>
                     <th>번호</th>
@@ -61,13 +101,13 @@
                     <th>조회</th>
                 </tr>
                 <%for(ArticleDTO art : arti){ %>
-                <tr>
-                    <td><%=pageStartNum-- %></td>
-                    <td><a href="/jboard1/view.jsp?no=<%=art.getNo()%>"><%=art.getTitle()%></a>&nbsp;[<%=art.getComment() %>]</td>
-                    <td><%=art.getNick() %></td>
-                    <td><%=art.getRdate().substring(2,10) %></td>
-                    <td><%=art.getHit() %></td>
-                </tr>
+	                <tr>
+	                    <td><%=pageStartNum-- %></td>
+	                    <td><a href="/jboard1/view.jsp?no=<%=art.getNo()%>&pg=<%=currentPg%>"><%=art.getTitle()%></a>&nbsp;[<%=art.getComment() %>]</td>
+	                    <td><%=art.getNick() %></td>
+	                    <td><%=art.getRdate().substring(2,10) %></td>
+	                    <td><%=art.getHit() %></td>
+	                </tr>
                 <%} %>
             </table>
         </article>
@@ -77,15 +117,15 @@
             
             <%if(pageGroupStart>1){ %>
             <a href="/jboard1/list.jsp?pg=<%=pageGroupStart-1 %>" class="prev">이전</a>
-            <%} %>
+            <%} %><!-- 이전을 눌렀을 때 페이지번호가 -로 넘어가지 않게 해줌. -->
             
             <%for(int n=pageGroupStart;n<=pageGroupEnd;n++){ %>
             <a href="/jboard1/list.jsp?pg=<%=n %>" class="num <%=(currentPg==n) ? "current" : ""%>"><%=n %></a>                
-            <%} %>
+            <%} %><!--  -->
             
             <%if(pageGroupEnd<lastPageNum){ %>
             <a href="/jboard1/list.jsp?pg=<%=pageGroupEnd+1 %>" class="next">다음</a>
-            <%} %>
+            <%} %><!-- -->
         </div>
 
         <!-- 글쓰기 버튼 -->

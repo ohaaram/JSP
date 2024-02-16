@@ -1,28 +1,32 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page import="kr.co.jboard1.dto.ArticleDTO"%>
+<%@page import="kr.co.jboard1.dao.ArticleDAO"%>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+	request.setCharacterEncoding("UTF-8");
+	String no=request.getParameter("no");
+	String pg=request.getParameter("pg");
+	
+	//수정글 조회
+	ArticleDAO dao = ArticleDAO.getInstance();
+	ArticleDTO article = dao.selectArticle(no);
+	
+%>
 <%@include file="./_header.jsp" %>
-<body>
-    <div id="container">
-        <header>
-            <h3>Board System v1.0</h3>
-            <p>
-                OOO님 반갑습니다.
-                <a href="#" class="logout">[로그아웃]</a>
-            </p>
-        </header>
         <main>
             <section class="modify">
                 <h3>글수정</h3>
                 <article>
-                    <form action="#">
+                    <form action="/jboard1/proc/modifyProc.jsp?pg=<%=pg %>" method="post">
+                    <input type="hidden" name="no" value="<%=no%>">
                         <table>
                             <tr>
                                 <td>제목</td>
-                                <td><input type="text" name="title" placeholder="제목을 입력하세요."/></td>
+                                <td><input type="text" name="title" value="<%=article.getTitle() %>" placeholder="제목을 입력하세요."/></td>
                             </tr>
                             <tr>
                                 <td>내용</td>
                                 <td>
-                                    <textarea name="content"></textarea>                                
+                                    <textarea name="content"><%=article.getContent() %></textarea>                                
                                 </td>
                             </tr>
                             <tr>
@@ -31,7 +35,7 @@
                             </tr>
                         </table>
                         <div>
-                            <a href="#" class="btnCancel">취소</a>
+                            <a href="/jboard1/view.jsp?no=<%=no %>" class="btnCancel">취소</a>
                             <input type="submit"  class="btnWrite" value="수정완료">
                         </div>
                     </form>
