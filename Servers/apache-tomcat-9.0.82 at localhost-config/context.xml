@@ -40,7 +40,32 @@
 	maxIdle="13"
 	maxWaitMillis="3000"
 	/>
-    
-    
-    
+	
+	    <Resource
+	name="jdbc/jboard"
+	auth="Container"
+	type="javax.sql.DataSource"
+	driverClassName="com.mysql.cj.jdbc.Driver"
+	url="jdbc:mysql://127.0.0.1:3306/jboard"
+	username="oor92"
+	password="1234"
+	maxTotal="13"
+	maxIdle="13"
+	maxWaitMillis="3000"
+	/>
+	
+		    <Resource
+	name="jdbc/studydb"
+	auth="Container"
+	type="javax.sql.DataSource"
+	driverClassName="com.mysql.cj.jdbc.Driver"
+	url="jdbc:mysql://127.0.0.1:3306/studydb"
+	username="oor92"
+	password="1234"
+	maxTotal="13"
+	maxIdle="13"
+	maxWaitMillis="3000"
+	/><!-- 요거 root->oor92로 바꿈 -->
+	
+
 </Context>
