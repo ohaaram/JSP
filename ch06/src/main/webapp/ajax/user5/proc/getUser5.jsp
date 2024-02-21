@@ -1,3 +1,4 @@
+<%@page import="dto.user5DTO"%>
 <%@page import="com.google.gson.Gson"%>
 <%@page import="dto.user4DTO"%>
 <%@page import="com.mysql.cj.x.protobuf.MysqlxPrepare.Prepare"%>
@@ -10,38 +11,39 @@
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	request.setCharacterEncoding("UTF-8");
-	String uid = request.getParameter("uid");
+	String seq = request.getParameter("seq");
 	
 	Context ctx = (Context) new InitialContext().lookup("java:comp/env");
 	DataSource ds = (DataSource) ctx.lookup("jdbc/studydb");
 	Connection conn = ds.getConnection();
 	
-	PreparedStatement psmt = conn.prepareStatement("select * from `user4` where `uid`=?");
-	psmt.setString(1,uid);
+	PreparedStatement psmt = conn.prepareStatement("select *from `user5` where `seq`=?");
+	
+	psmt.setString(1,seq);
 	
 	ResultSet rs = psmt.executeQuery();
 	
-	user4DTO user4 = null;
+	user5DTO user5 = null;
 	
 	if(rs.next()){
-		user4 = new user4DTO();
+		user5= new user5DTO();
 		
-		user4.setUid(rs.getString(1));
-		user4.setName(rs.getString(2));
-		user4.setGender(rs.getString(3));
-		user4.setAge(rs.getString(4));
-		user4.setHp(rs.getString(5));
-		user4.setAddr(rs.getString(6));
-		
+		user5.setSeq(rs.getString(1));
+		user5.setName(rs.getString(2));
+		user5.setGender(rs.getString(3));
+		user5.setAge(rs.getString(4));
+		user5.setAddr(rs.getString(5));
 	}
 	
 	rs.close();
 	conn.close();
 	psmt.close();
 	
-	//JSON출력
+	
 	Gson gson = new Gson();
-	String strJson = gson.toJson(user4);
+	String strJson = gson.toJson(user5);
 	out.print(strJson);
+	
+	
 
 %>

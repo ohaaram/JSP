@@ -22,6 +22,8 @@
 					const hp = formUser.hp.value;
 					const addr = formUser.addr.value;
 					
+					console.log("uid : "+uid);
+					
 					const jsonData={
 							"uid":uid,
 							"name":name,
@@ -119,7 +121,7 @@
 				</tr>
 				<tr>
 					<td colspan="2" align="right">
-						<input type="submit" name="submit" value="등록하기">
+						<input type="submit" name="submit" value="수정하기">
 					</td>
 				</tr>
 			</table>
