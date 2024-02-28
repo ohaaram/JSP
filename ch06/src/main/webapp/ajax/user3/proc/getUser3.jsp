@@ -1,4 +1,4 @@
-<%@page import="dto.user3DTO"%>
+<%@page import="kr.co.jboard2.dto.user3DTO"%>
 <%@page import="com.mysql.cj.x.protobuf.MysqlxPrepare.Prepare"%>
 <%@page import="com.google.gson.Gson"%>
 <%@page import="java.sql.ResultSet"%>

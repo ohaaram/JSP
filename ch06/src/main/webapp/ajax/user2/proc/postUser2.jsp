@@ -1,6 +1,6 @@
 <%@page import="com.google.gson.JsonObject"%>
 <%@page import="org.apache.catalina.valves.JsonAccessLogValve"%>
-<%@page import="dto.user2DTO"%>
+<%@page import="kr.co.jboard2.dto.user2DTO"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="javax.sql.DataSource"%>

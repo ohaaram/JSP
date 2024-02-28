@@ -1,4 +1,4 @@
-<%@page import="dto.user1DTO"%>
+<%@page import="kr.co.jboard2.dto.user1DTO"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>

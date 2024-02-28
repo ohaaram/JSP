@@ -1,6 +1,6 @@
-<%@page import="dto.user5DTO"%>
+<%@page import="kr.co.jboard2.dto.user5DTO"%>
 <%@page import="com.google.gson.JsonObject"%>
-<%@page import="dto.user4DTO"%>
+<%@page import="kr.co.jboard2.dto.user4DTO"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="javax.sql.DataSource"%>

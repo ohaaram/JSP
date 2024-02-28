@@ -5,7 +5,7 @@
 <%@page import="javax.naming.InitialContext"%>
 <%@page import="javax.naming.Context"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@page import="dto.productDTO"%>
+<%@page import="kr.co.jboard2.dto.productDTO"%>
 <%
 	request.setCharacterEncoding("UTF-8");
 

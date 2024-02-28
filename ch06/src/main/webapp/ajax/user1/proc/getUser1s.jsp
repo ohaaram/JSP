@@ -1,6 +1,6 @@
 <%@page import="com.google.gson.Gson"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="dto.user1DTO"%>
+<%@page import="kr.co.jboard2.dto.user1DTO"%>
 <%@page import="java.util.List"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>

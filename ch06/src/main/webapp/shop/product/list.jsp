@@ -6,7 +6,7 @@
 <%@page import="javax.naming.Context"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
-<%@page import="dto.productDTO"%>
+<%@page import="kr.co.jboard2.dto.productDTO"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	List <productDTO> users = new ArrayList<>();

@@ -8,7 +8,7 @@
 <%@page import="javax.naming.Context"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="dto.shopDTO"%>
+<%@page import="kr.co.jboard2.dto.shopDTO"%>
 <%
 	List <shopDTO> users = new ArrayList<>();
 	shopDTO dto  =null;
