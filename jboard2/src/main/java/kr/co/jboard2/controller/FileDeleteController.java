@@ -1,6 +1,7 @@
 package kr.co.jboard2.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,11 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.gson.JsonObject;
+
 import kr.co.jboard2.service.ArticleService;
 import kr.co.jboard2.service.FileService;
 
-@WebServlet("/delete.do")
-public class DeleteController extends HttpServlet{
+@WebServlet("/fileDelete.do")
+public class FileDeleteController extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -34,18 +37,20 @@ public class DeleteController extends HttpServlet{
 	}
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String no = req.getParameter("no");
 		String fno  = req.getParameter("fno");
-
-		articleService.deleteArticle(no);
 		
-		fileService.selectFile(fno);
+		//파일 삭제 후 해당 파일 글번호 반환
+		int ano=fileService.deleteFile(fno);
 		
-		int cnt  = //파일이 몇개가 있는지 카운팅
+		//해당 글의 file 컬럼 값을 -1 카운팅
+		articleService.updateArticleForFileCount(ano);
 		
-		fileService.deleteFile(no);
+		//ajax로 요청했기 때문에 결과 JSON 출력(결과값은 파일의 글번호)
+		JsonObject json = new JsonObject();
+		json.addProperty("result", ano);
 		
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/list.do");
-		dispatcher.forward(req, resp);
+		//JSON 출력
+		PrintWriter writer = resp.getWriter();
+		writer.print(json);		
 	}
 }

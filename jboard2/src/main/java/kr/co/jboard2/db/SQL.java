@@ -84,6 +84,9 @@ public class SQL {
 												+"LEFT JOIN `file` b ON a.no = b.ano "
 												+"WHERE a.no = ?";
 
-	
+	public static final String UPDATE_ARTICLE_FOR_FILE_COUNT="UPDATE `Article` SET `file`=`file`-1 WHERE `no`=?";
+
+	public static final String SELECT_FILE_FOR_ANO = "SELECT `ano` FROM `File` WHERE `fno`=?";
+
 }
 

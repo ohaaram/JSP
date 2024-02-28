@@ -229,5 +229,23 @@ public class ArticleDAO extends DBHelper{
 		
 		return total;
 	}	
+	
+	public void updateArticleForFileCount(int no) {
+		try {
+			
+			conn=getConnection();
+			
+			conn.prepareStatement(SQL.UPDATE_ARTICLE_FOR_FILE_COUNT);
+			psmt.setInt(1,no);
+			
+			logger.info("updateArticleForFileCount : " + psmt);
+			
+			psmt.executeUpdate();
+			closeAll();
+			
+		}catch(Exception e) {
+			logger.error("updateArticleForFileCount : "+e.getMessage());
+		}
+	}
 
 }

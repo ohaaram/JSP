@@ -96,7 +96,38 @@ public class FileDAO extends DBHelper{
 			logger.error("updateFile : "+e.getMessage());
 		}
 	}
-	public void deleteFile(int fno) {}
-	
+	public int deleteFile(String fno) {
+		
+		int ano=0;//삭제할 파일의 글 번호
+		
+		try {
+			conn=getConnection();
+			conn.setAutoCommit(false);
+			
+			psmtEtc1 = conn.prepareStatement(SQL.SELECT_FILE_FOR_ANO);
+			psmtEtc1.setString(1,fno);
+			logger.info("deleteFile : " + psmtEtc1);
+
+			psmt = conn.prepareStatement(SQL.DELETE_FILE);
+			psmt.setString(1, fno);
+			logger.info("deleteFile : " + psmt);
+			
+			rs = psmtEtc1.executeQuery();
+			psmt.executeUpdate();
+			conn.commit();
+			
+			if(rs.next()) {
+				
+				ano = rs.getInt(1);
+			}
+			
+			closeAll();
+			
+		}catch(Exception e) {
+			logger.error("deleteFile : " + e.getMessage());
+		}
+		
+		return ano;
+	}
 
 }

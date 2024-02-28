@@ -1,6 +1,7 @@
 package kr.co.jboard2.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,7 +15,9 @@ import org.slf4j.LoggerFactory;
 
 import kr.co.jboard2.dao.ArticleDAO;
 import kr.co.jboard2.dto.ArticleDTO;
+import kr.co.jboard2.dto.FileDTO;
 import kr.co.jboard2.service.ArticleService;
+import kr.co.jboard2.service.FileService;
 
 @WebServlet("/modify.do")
 public class ModifyController extends HttpServlet {
@@ -22,6 +25,8 @@ public class ModifyController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	ArticleService articleService = ArticleService.getInstance();
+	FileService fileService = FileService.getInstance();
+	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 
@@ -47,20 +52,26 @@ public class ModifyController extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {		
+	
+		//파일 업로드
+		ArticleDTO articleDTO = articleService.fileUpload(req);
+		logger.debug(""+articleDTO);
 		
-		String no = req.getParameter("no");
-		String title = req.getParameter("title");
-		String content = req.getParameter("content");
+		//글 등록
+		articleService.updateArticle(articleDTO);
 		
-		ArticleDTO dto = new ArticleDTO();
+		//파일 등록
+		List<FileDTO> files = articleDTO.getFileDTOs();
 		
-		dto.setTitle(title);
-		dto.setContent(content);
-		dto.setNo(no);
+		for(FileDTO fileDTO : files) {
+			fileDTO.setAno(articleDTO.getNo());
+			logger.debug(""+fileDTO);
+			
+			fileService.insertFile(fileDTO);
+			
+		}		
 		
-		articleService.updateArticle(dto);
-		
-		resp.sendRedirect("/jboard2/view.do?no="+dto.getNo());
+		resp.sendRedirect("/jboard2/view.do?no="+articleDTO.getNo());
 	}
 	
 }

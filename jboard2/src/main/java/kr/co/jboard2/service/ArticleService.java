@@ -235,5 +235,9 @@ public class ArticleService {
 		return (currentPage-1)*10;
 	}
 	
+	public void updateArticleForFileCount(int no) {
+		articleDAO.updateArticleForFileCount(no);
+	}
+	
 	
 }
