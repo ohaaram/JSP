@@ -54,7 +54,9 @@ public class ArticleService {
 	public void updateArticle(ArticleDTO articleDTO) {
 		articleDAO.updateArticle(articleDTO);
 	}
-	public void deleteArticle(int no) {
+	public void deleteArticle(String no) {
+		//파일삭제도 같이 해주자.
+		
 		articleDAO.deleteArticle(no);
 		
 	}

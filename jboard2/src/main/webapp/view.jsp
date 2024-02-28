@@ -31,9 +31,9 @@
         </table>
         
         <div>
-            <a href="#" class="btn btnRemove">삭제</a>
-            <a href="./modify.html" class="btn btnModify">수정</a>
-            <a href="./list.html" class="btn btnList">목록</a>
+            <a href="/jboard2/delete.do?no=${articleDTO.no}&fno=${file.fno}" class="btn btnRemove">삭제</a>
+            <a href="/jboard2/modify.do?no=${articleDTO.no}" class="btn btnModify">수정</a>
+            <a href="/jboard2/list.do" class="btn btnList">목록</a>
         </div>
 
         <!-- 댓글목록 -->
@@ -57,10 +57,11 @@
         <!-- 댓글쓰기 -->
         <section class="commentForm">
             <h3>댓글쓰기</h3>
-            <form action="#">
-                <textarea name="content">댓글내용 입력</textarea>
+            <form action="/jboard2/view.do" method="post">
+            <input type="text" name="parent" value="${articleDTO.parent}">
+                <textarea name="content" >댓글내용 입력</textarea>
                 <div>
-                    <a href="#" class="btn btnCancel">취소</a>
+                    <a href="/jboard2/view.do" class="btn btnCancel">취소</a>
                     <input type="submit" value="작성완료" class="btn btnComplete"/>
                 </div>
             </form>

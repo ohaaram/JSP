@@ -73,10 +73,17 @@ public class SQL {
 	
 	
 	public static final String DELETE_COMMENT="delete from `article` where `no`=?";
+	public static final String DELETE_FILE="delete from `file` where `ano`=?";
 	
 	public static final String DELETE_ARTICLE="delete from `article` where `no`=? or `parent`=?";
 	public static final String UPDATE_ARTICLE="update `article` set  `title`=?,`content`=?  where `no`=?";//제목,내용 수정
 	
 	public static final String UPDATE_COMMENT="update `article` set `content`=? where `no`=?";
+	public static final String DELETE_DATA = "DELETE a, b "
+												+"FROM `article` a "
+												+"LEFT JOIN `file` b ON a.no = b.ano "
+												+"WHERE a.no = ?";
+
+	
 }
 

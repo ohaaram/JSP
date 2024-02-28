@@ -162,8 +162,51 @@ public class ArticleDAO extends DBHelper{
 		
 		return lists;
 	}
-	public void updateArticle(ArticleDTO articleDTO) {}
-	public void deleteArticle(int no) {}
+	public void updateArticle(ArticleDTO articleDTO) {
+		
+		try {
+			
+			conn=getConnection();
+			psmt = conn.prepareStatement(SQL.UPDATE_COMMENT);
+			psmt.setString(1, articleDTO.getContent());
+			psmt.setInt(2, articleDTO.getNo());
+			
+			logger.info("updateArticle : "+psmt);
+			
+			System.out.println("updateArticle : " +psmt);
+			
+			psmt.executeUpdate();
+			
+			closeAll();
+			
+		}catch(Exception e) {
+			
+			logger.error("updateArticle : "+ e.getMessage());
+		}			
+	}
+	public void deleteArticle(String no) {
+		
+		try {
+			conn=getConnection();
+			conn.setAutoCommit(false);
+			
+			psmtEtc1 = conn.prepareStatement(SQL.DELETE_FILE);
+			psmtEtc1.setString(1, no);
+			psmtEtc1.executeUpdate();
+			
+			psmt = conn.prepareStatement(SQL.DELETE_COMMENT);
+			psmt.setString(1, no);
+			psmt.executeUpdate();	
+			
+			conn.commit();			
+			
+			closeAll();		
+			
+		}catch(Exception e) {
+			
+			logger.error("deleteArticle : "+e.getMessage());
+		}		
+	}
 	
 	public int listCount() {
 		
