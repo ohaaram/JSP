@@ -59,6 +59,42 @@ public class ArticleDAO extends DBHelper{
 		return pk;
 		
 	}
+	
+	public int insertComment(ArticleDTO articleDTO) {
+		
+		int result = 0;
+		int pk=0;
+		
+		try {
+			conn=getConnection();
+			psmt = conn.prepareStatement(SQL.INSERT_COMMENT, Statement.RETURN_GENERATED_KEYS);
+			psmt.setInt(1, articleDTO.getParent());
+			psmt.setString(2, articleDTO.getContent());
+			psmt.setString(3, articleDTO.getWriter());
+			psmt.setString(4, articleDTO.getRegip());
+			
+			logger.info("insertComment : "+psmt);
+						
+			 result = psmt.executeUpdate();//결과값 : 성공한 row의 count 수 
+			 
+			 
+			//INSERT 해서 부여된 AUTO_INCREMENT PK 값 가져오기			
+			rs = psmt.getGeneratedKeys();
+				
+			if(rs.next()) {
+				pk = rs.getInt(1);
+			}
+			
+			closeAll();
+			
+			
+		}catch(Exception e) {
+			logger.error("insertComment : "+e.getMessage());
+		}
+		
+		return pk;
+		
+	}
 	public ArticleDTO selectArticle(String no) {
 		
 		ArticleDTO articleDTO=null;
@@ -150,6 +186,7 @@ public class ArticleDAO extends DBHelper{
 				list.setWriter(rs.getString(9));
 				list.setRegip(rs.getString(10));
 				list.setRdate(rs.getString(11));
+				list.setNick(rs.getString(12));
 				
 				lists.add(list);
 			}
@@ -161,6 +198,49 @@ public class ArticleDAO extends DBHelper{
 		}
 		
 		return lists;
+	}
+	
+	public List<ArticleDTO> selectComments(String parent) {
+		
+		ArticleDTO article = null;
+		List<ArticleDTO> comments = new ArrayList<ArticleDTO>();
+		
+		try {
+			conn=getConnection();
+			psmt = conn.prepareStatement(SQL.SELECT_COMMENTS);
+			psmt.setString(1,parent);
+			logger.info("selectComments : "+psmt);
+			
+			rs = psmt.executeQuery();
+			
+			while(rs.next()){
+				
+				article = new ArticleDTO();
+				
+				article.setNo(rs.getInt(1));
+				article.setParent(rs.getInt(2));
+				article.setComment(rs.getInt(3));
+				article.setCate(rs.getString(4));
+				article.setTitle(rs.getString(5));
+				article.setContent(rs.getString(6));
+				article.setFile(rs.getInt(7));
+				article.setHit(rs.getInt(8));
+				article.setWriter(rs.getString(9));
+				article.setRegip(rs.getString(10));
+				article.setRdate(rs.getString(11));
+				article.setNick(rs.getString(12));
+				
+				comments.add(article);
+				
+			}	
+			
+			closeAll();
+			
+		}catch(Exception e) {
+			logger.error("selectComments : "+e.getMessage());
+		}
+		
+		return comments;
 	}
 	public void updateArticle(ArticleDTO articleDTO) {
 		
@@ -246,6 +326,27 @@ public class ArticleDAO extends DBHelper{
 		}catch(Exception e) {
 			logger.error("updateArticleForFileCount : "+e.getMessage());
 		}
+	}
+	
+	public int deleteComment(String no) {
+		
+		int result =0;
+		
+		try {
+			conn=getConnection();
+			psmt = conn.prepareStatement(SQL.DELETE_COMMENT);
+			psmt.setString(1, no);
+			logger.info("deleteComment : "+psmt);
+			
+			result = psmt.executeUpdate();
+			
+			closeAll();
+			
+			
+		}catch(Exception e) {
+			logger.error("deleteComment : "+e.getMessage());
+		}
+		return result;
 	}
 
 }

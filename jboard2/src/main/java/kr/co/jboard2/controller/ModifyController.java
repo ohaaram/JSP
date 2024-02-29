@@ -24,15 +24,12 @@ public class ModifyController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	
-	ArticleService articleService = ArticleService.getInstance();
-	FileService fileService = FileService.getInstance();
-	
-	Logger logger = LoggerFactory.getLogger(this.getClass());
-	
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	private ArticleService articleService = ArticleService.getInstance();
+	private FileService fileService = FileService.getInstance();
 
 	@Override
 	public void init() throws ServletException {
-		
 	}
 	
 	@Override
@@ -40,27 +37,25 @@ public class ModifyController extends HttpServlet {
 		
 		String no = req.getParameter("no");
 		
-		//글 수정 내용들 조회
 		ArticleDTO articleDTO = articleService.selectArticle(no);
 		
 		req.setAttribute("articleDTO", articleDTO);
-		
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/modify.jsp");
 		dispatcher.forward(req, resp);
 	}
 	
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {		
-	
-		//파일 업로드
-		ArticleDTO articleDTO = articleService.fileUpload(req);
-		logger.debug(""+articleDTO);
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		//글 등록
+		// 파일 업로드
+		ArticleDTO articleDTO = articleService.fileUpload(req);
+		logger.debug("modify의 doPost : "+articleDTO.getNo());
+		
+		// 글 등록
 		articleService.updateArticle(articleDTO);
 		
-		//파일 등록
+		// 파일 등록
 		List<FileDTO> files = articleDTO.getFileDTOs();
 		
 		for(FileDTO fileDTO : files) {
@@ -68,8 +63,7 @@ public class ModifyController extends HttpServlet {
 			logger.debug(""+fileDTO);
 			
 			fileService.insertFile(fileDTO);
-			
-		}		
+		}
 		
 		resp.sendRedirect("/jboard2/view.do?no="+articleDTO.getNo());
 	}

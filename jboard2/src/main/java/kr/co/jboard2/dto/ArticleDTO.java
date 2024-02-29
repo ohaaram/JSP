@@ -11,9 +11,17 @@ public class ArticleDTO {
 	private String title;
 	private String content;
 	
-	//추가필드
-	private List<FileDTO> fileDTOs;	
 	
+	//추가필드
+	private List<FileDTO> fileDTOs;
+	private String nick;
+	
+	public String getNick() {
+		return nick;
+	}
+	public void setNick(String nick) {
+		this.nick = nick;
+	}
 	public List<FileDTO> getFileDTOs() {
 		return fileDTOs;
 	}
@@ -50,6 +58,10 @@ public class ArticleDTO {
 	}
 	public void setParent(int parent) {
 		this.parent = parent;
+	}
+	
+	public void setParent(String parent) {
+		this.parent = Integer.parseInt(parent);
 	}
 	public int getComment() {
 		return comment;
@@ -98,6 +110,12 @@ public class ArticleDTO {
 	}
 	public void setRdate(String rdate) {
 		this.rdate = rdate;
+	}
+	@Override
+	public String toString() {
+		return "ArticleDTO [no=" + no + ", parent=" + parent + ", comment=" + comment + ", cate=" + cate + ", title="
+				+ title + ", content=" + content + ", fileDTOs=" + fileDTOs + ", nick=" + nick + ", file=" + file
+				+ ", hit=" + hit + ", writer=" + writer + ", regip=" + regip + ", rdate=" + rdate + "]";
 	}
 	
 	

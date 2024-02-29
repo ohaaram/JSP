@@ -37,10 +37,11 @@ public class FileDeleteController extends HttpServlet{
 	}
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		//파일번호 수신
 		String fno  = req.getParameter("fno");
-		
+	
 		//파일 삭제 후 해당 파일 글번호 반환
-		int ano=fileService.deleteFile(fno);
+		int ano=fileService.deleteFile(req,fno);
 		
 		//해당 글의 file 컬럼 값을 -1 카운팅
 		articleService.updateArticleForFileCount(ano);

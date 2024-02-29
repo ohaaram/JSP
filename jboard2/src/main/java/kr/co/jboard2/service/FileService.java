@@ -46,9 +46,31 @@ public class FileService {
 		dao.updateFile(fileDTO);
 	}
 
-	public int deleteFile(String fno) {
+	public int deleteFile(HttpServletRequest req, String fno) {
 		
-		return dao.deleteFile(fno);
+		
+		FileDTO fileDTO = dao.deleteFile(fno);
+		
+		//업로드 디렉토리 파일 삭제
+		ServletContext ctx = req.getServletContext();
+		String uploadPath = ctx.getRealPath("/uploads");
+		
+		//파일 객체 생성
+		File file = new File(uploadPath+File.separator+fileDTO.getsName());
+		
+		//파일 삭제
+		if(file.exists()) {
+			file.delete();
+		}
+		
+		return fileDTO.getAno();
+	}
+	
+	public void deleteFilesName(String no) {		
+		
+		List<FileDTO> lists = new ArrayList<FileDTO>();
+		
+		lists= dao.deleteFilesName(no);
 	}
 
 }

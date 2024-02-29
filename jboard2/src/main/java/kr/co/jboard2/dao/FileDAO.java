@@ -1,5 +1,6 @@
 package kr.co.jboard2.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -96,15 +97,18 @@ public class FileDAO extends DBHelper{
 			logger.error("updateFile : "+e.getMessage());
 		}
 	}
-	public int deleteFile(String fno) {
+	
+	
+	public FileDTO deleteFile(String fno) {
 		
 		int ano=0;//삭제할 파일의 글 번호
+		String sname=null;
 		
 		try {
 			conn=getConnection();
 			conn.setAutoCommit(false);
 			
-			psmtEtc1 = conn.prepareStatement(SQL.SELECT_FILE_FOR_ANO);
+			psmtEtc1 = conn.prepareStatement(SQL.SELECT_FILE_FOR_DELETE);
 			psmtEtc1.setString(1,fno);
 			logger.info("deleteFile : " + psmtEtc1);
 
@@ -119,6 +123,7 @@ public class FileDAO extends DBHelper{
 			if(rs.next()) {
 				
 				ano = rs.getInt(1);
+				sname = rs.getString(2);
 			}
 			
 			closeAll();
@@ -127,7 +132,35 @@ public class FileDAO extends DBHelper{
 			logger.error("deleteFile : " + e.getMessage());
 		}
 		
-		return ano;
+		return new FileDTO(ano,sname);
+	}
+	
+	public List<FileDTO> deleteFilesName(String no) {
+		
+		List<FileDTO> lists = new ArrayList<>();
+		FileDTO list = null;
+		
+		try {
+			conn=getConnection();
+			psmt = conn.prepareStatement(SQL.SELECT_FOR_SNAME);
+			psmt.setString(1, no);
+			
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				list = new FileDTO();
+
+				list.setsName(rs.getString(4));
+				
+				lists.add(list);			
+			}
+			
+			closeAll();			
+			
+		}catch(Exception e) {
+			logger.error("deleteFilesName : "+ e.getMessage());
+		}
+		return lists;
 	}
 
 }

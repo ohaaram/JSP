@@ -8,7 +8,7 @@
 		
 		for(const del of fileDels){
 			
-			del.onclick = (e) = > {
+			del.onclick = (e) => {
 				
 				e.preventDefault();
 				
@@ -59,7 +59,7 @@
     <section class="modify">
 
         <form action="/jboard2/modify.do" method="post" enctype="multipart/form-data">
-        	<input type="hidden" name="no" value="${articleDTO.no}">
+        	<input type="text" name="no" value="${articleDTO.no}">
             <table border="0">
                 <caption>글수정</caption>
                 <tr>
@@ -101,7 +101,7 @@
             
             <div>
                 <a href="/jboard2/view.do?no=${articleDTO.no}" class="btn btnCancel">취소</a>
-                <input type="submit" value="작성완료" class="btn btnComplete"/>
+                <input type="submit" value="수정완료" class="btn btnComplete"/>
             </div>
         </form>
 
